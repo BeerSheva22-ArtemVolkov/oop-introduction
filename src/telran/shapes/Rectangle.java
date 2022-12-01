@@ -53,11 +53,11 @@ public class Rectangle {
 	}
 	
 	private String getMiddleLine(int offset) {
-		return getOffset(offset) + symbol.repeat(width);
+		return getOffset(offset) + symbol + getOffset(width - 2) + symbol;
 	}
 
 	private String getLine(int offset) {
-		return getOffset(offset) + symbol + getOffset(width - 2) + symbol;
+		return getOffset(offset) + symbol.repeat(width);
 	}
 
 	private String getOffset(int offset) {
