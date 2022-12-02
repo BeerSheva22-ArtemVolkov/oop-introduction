@@ -19,7 +19,7 @@ public class ShapeTests {
 		displayStrings(rectangle.presentation(20));
 	}
 	
-
+	@Disabled
 	@Test
 	void squareTest() {
 		Square square = new Square(5);
@@ -39,15 +39,11 @@ public class ShapeTests {
 		displayStrings(rSquare.presentation(15));
 		lSquare.setHeight(6);
 		rSquare.setWidth(7);
-		lSquare.setSymbol("@");
 		displayStrings(lSquare.presentation(20));
-		rSquare.setSymbol("X");
 		displayStrings(rSquare.presentation(25));
 		lSquare.setHeight(3);
 		rSquare.setWidth(11);
-		lSquare.setSymbol("0");
 		displayStrings(lSquare.presentation(30));
-		rSquare.setSymbol("$");
 		displayStrings(rSquare.presentation(35));
 	}
 	
