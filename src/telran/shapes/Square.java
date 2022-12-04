@@ -6,14 +6,16 @@ public class Square extends Rectangle {
 		super(size, size);
 	}
 
+	public void setSize(int size) {
+		super.setWidth(size);
+		super.setHeight(size);
+	}
+
 	public void setWidth(int width) {
-		super.setWidth(width);
-		super.setHeight(width);
+		setSize(width);
 	}
 	
 	public void setHeight(int height) {
-		super.setWidth(height);
-		super.setHeight(height);
+		setSize(height);
 	}
-
 }
