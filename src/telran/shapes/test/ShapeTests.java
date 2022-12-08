@@ -19,18 +19,21 @@ public class ShapeTests {
 		displayStrings(rectangle.presentation(20));
 	}
 	
-	@Disabled
+	
 	@Test
 	void squareTest() {
 		Square square = new Square(5);
+		Square square2 = new Square(22);
 		displayStrings(square.presentation(20));
 		square.setHeight(3);
 		displayStrings(square.presentation(20));
 		square.setWidth(11);
 		displayStrings(square.presentation(20));
+		System.out.println(square.getWidth());
+		System.out.println(square2.getHeight());
 	}
 	
-	
+	@Disabled
 	@Test
 	void squareTriangleTest() {
 		SquareLeftTriangle lSquare = new SquareLeftTriangle(5);
