@@ -31,7 +31,7 @@ public class CipherTest {
 		assertEquals(testNum, cp3.decipher(testStr));
 		
 		BaseCipher cp4 = new BaseCipher(10);
-		testNum = 5683563;
+		testNum = 0;
 		System.out.println("Key of cp4 = " + cp4.getKey());
 		testStr = cp4.cipher(testNum);
 		System.out.println("Cipher of cp4 = " + testStr);

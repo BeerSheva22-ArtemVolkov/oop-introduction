@@ -53,10 +53,10 @@ public class BaseCipher {
 	public String cipher(int number) {
 		String res = "";
 		int delimetr = getKey().length();
-		while (number != 0) {
+		do {
 			res = res + key.charAt(number % delimetr);
 			number = number / delimetr;
-		}
+		} while (number != 0);
 		return res;
 	}
 	
