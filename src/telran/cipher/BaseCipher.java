@@ -61,6 +61,7 @@ public class BaseCipher {
 	}
 	
 	public Integer decipher(String cipher) {
+		// Нужно было использовать getUniqueNumbers и getNumberFromDigit
 		int res = 0;
 		int delimetr = getKey().length();
 		char[] charArray = cipher.toCharArray();

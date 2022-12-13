@@ -19,7 +19,7 @@ public class ShapeTests {
 		displayStrings(rectangle.presentation(20));
 	}
 	
-	
+	@Disabled
 	@Test
 	void squareTest() {
 		Square square = new Square(5);
@@ -48,6 +48,20 @@ public class ShapeTests {
 		rSquare.setWidth(11);
 		displayStrings(lSquare.presentation(30));
 		displayStrings(rSquare.presentation(35));
+	}
+	
+	
+	@Test
+	void shapesTest() {
+		
+		SquareLeftTriangle lSquare = new SquareLeftTriangle(6);
+		SquareRightTriangle rSquare = new SquareRightTriangle(5);
+		Square square = new Square(5);
+		
+		Shape[] shapes = {lSquare, rSquare, square};
+		Canvas canva = new Canvas(10, 10, shapes);
+		canva.setDirection("row");
+		displayStrings(canva.presentation(5));
 	}
 	
 	private void displayStrings(String strings[]) {
