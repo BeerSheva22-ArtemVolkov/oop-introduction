@@ -11,6 +11,13 @@ public class Canvas extends Shape {
 		this.shapes = shapes;
 	}
 
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+	
+	public void setMargin(int margin) {
+		this.margin = margin;
+	}
 	@Override
 	public String[] presentation(int offset) {
 
@@ -18,10 +25,9 @@ public class Canvas extends Shape {
 		String[] res = new String[setResLength(offset)];
 		switch (direction){
 			case "row":
-				shapes[0].setHeight(getHeight());
+				//shapes[0].setHeight(getHeight());
 				res = shapes[0].presentation(offset);
 				for(int i = 1; i < shapes.length; i++) {
-					
 					res = joinArraysInRow(res, shapes[i].presentation(offset));
 				}
 				break;
@@ -47,38 +53,31 @@ public class Canvas extends Shape {
 
 	private int setResLength(int offset) {
 		int res = 0;
-		if (direction.equals("row")) {
-			res = shapes.length;
-		}
-		else if (direction.equals("column")){
-			for (Shape x : shapes) {
-				
-				res = res + x.presentation(offset).length;
-			}
-			res = res + margin * (shapes.length - 1);
+		switch (direction){
+			case "row":
+				res = shapes.length;
+				break;
+			case "column":
+				for (Shape x : shapes) {
+					res = res + x.presentation(offset).length;
+				}
+				res = res + margin * (shapes.length - 1);
+				break;
 		}
 		return res;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
 	}
 	
 	private void setPresSize() {
 		if (direction.equals("row")) {
 			for (Shape x : shapes) {
-				x.setWidth(getWidth());
+				x.setHeight(getHeight());
 			}
 		}
 		else if (direction.equals("column")){
 			for (Shape x : shapes) {
-				x.setHeight(getHeight());
+				x.setWidth(getWidth());
 			}
 		}
-	}
-	
-	public void setMargin(int margin) {
-		this.margin = margin;
 	}
 
 	private static String[] joinArraysInRow(String[] array1, String[] array2) {

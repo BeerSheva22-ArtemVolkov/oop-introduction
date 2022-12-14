@@ -52,13 +52,30 @@ public class ShapeTests {
 	
 	
 	@Test
-	void shapesTest() {
+	void shapesTest1() {
 		
 		SquareLeftTriangle lSquare = new SquareLeftTriangle(6);
 		SquareRightTriangle rSquare = new SquareRightTriangle(5);
 		Square square = new Square(5);
+		Rectangle rectangle = new Rectangle(15,3);
+		Rectangle rectangle2 = new Rectangle(3,15);
 		
-		Shape[] shapes = {lSquare, rSquare, square};
+		Shape[] shapes = {lSquare, rSquare, square, rectangle, rectangle2};
+		Canvas canva = new Canvas(10, 10, shapes);
+		canva.setDirection("column");
+		displayStrings(canva.presentation(5));
+	}
+	
+	@Test
+	void shapesTest2() {
+		
+		SquareLeftTriangle lSquare = new SquareLeftTriangle(6);
+		SquareRightTriangle rSquare = new SquareRightTriangle(5);
+		Square square = new Square(5);
+		Rectangle rectangle = new Rectangle(15,3);
+		Rectangle rectangle2 = new Rectangle(3,15);
+		
+		Shape[] shapes = {lSquare, rSquare, square, rectangle, rectangle2};
 		Canvas canva = new Canvas(10, 10, shapes);
 		canva.setDirection("row");
 		displayStrings(canva.presentation(5));
