@@ -63,6 +63,8 @@ public class ShapeTests {
 		Shape[] shapes = {lSquare, rSquare, square, rectangle, rectangle2};
 		Canvas canva = new Canvas(10, 10, shapes);
 		canva.setDirection("column");
+		//this.canva.setDirection("column");
+		canva.setMargin(1);
 		displayStrings(canva.presentation(5));
 	}
 	

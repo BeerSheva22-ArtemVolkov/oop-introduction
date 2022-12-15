@@ -18,6 +18,7 @@ public class Canvas extends Shape {
 	public void setMargin(int margin) {
 		this.margin = margin;
 	}
+	
 	@Override
 	public String[] presentation(int offset) {
 
@@ -47,7 +48,6 @@ public class Canvas extends Shape {
 				}
 				break;
 		}
-		
 		return res;
 	}
 
