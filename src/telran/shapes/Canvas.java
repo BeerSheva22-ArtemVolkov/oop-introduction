@@ -1,5 +1,7 @@
 package telran.shapes;
 
+import java.util.Arrays;
+
 public class Canvas extends Shape {
 	
 	private Shape[] shapes;
@@ -26,31 +28,35 @@ public class Canvas extends Shape {
 		String[] res = new String[setResLength(offset)];
 		switch (direction){
 			case "row":
-				//shapes[0].setHeight(getHeight());
 				res = shapes[0].presentation(offset);
 				for(int i = 1; i < shapes.length; i++) {
-					res = joinArraysInRow(res, shapes[i].presentation(offset));
+					res = mergeArraysInRow(res, shapes[i].presentation(offset));
 				}
 				break;
 			case "column":
-				int j = 0;
-				for (Shape x : shapes) {
-					for (int i = 0; i < x.presentation(offset).length; i++) {
-						res[j] = x.presentation(offset)[i];
-						j++;
-					}
-					if (!x.equals(shapes[shapes.length - 1])) {
-						for (int i = 0; i < margin; i++) {
-							res[j] = "";
-							j++;
-						}
-					}
+				Arrays.fill(res, " ".repeat(getWidth()));
+				int length = mergeArraysInColumn(0, res, shapes[0].presentation(offset));
+				for(int i = 1; i < shapes.length; i++) {
+					length = mergeArraysInColumn(length + margin, res, shapes[i].presentation(offset));
 				}
 				break;
 		}
 		return res;
 	}
 
+	private int mergeArraysInColumn(int length, String[] res, String[] shapePresentation) {
+		System.arraycopy(shapePresentation, 0, res, length, shapePresentation.length);
+		return length + shapePresentation.length;
+	}
+
+	private static String[] mergeArraysInRow(String[] array1, String[] array2) {
+		String result[] = new String[array1.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = array1[i] + array2[i];
+		}
+		return result;
+	}
+	
 	private int setResLength(int offset) {
 		int res = 0;
 		switch (direction){
@@ -59,9 +65,9 @@ public class Canvas extends Shape {
 				break;
 			case "column":
 				for (Shape x : shapes) {
-					res = res + x.presentation(offset).length;
+					res += x.getHeight();
 				}
-				res = res + margin * (shapes.length - 1);
+				res += margin * (shapes.length - 1);
 				break;
 		}
 		return res;
@@ -78,14 +84,6 @@ public class Canvas extends Shape {
 				x.setWidth(getWidth());
 			}
 		}
-	}
-
-	private static String[] joinArraysInRow(String[] array1, String[] array2) {
-		String result[] = new String[array1.length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = array1[i] + array2[i];
-		}
-		return result;
 	}
 	
 }
