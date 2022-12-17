@@ -3,19 +3,24 @@ package telran.memory;
 public class MemoryOperations {
 
 	public static int getMaxAvailableMemory() {
-		int res = Integer.MAX_VALUE;
-		boolean running = true;
+		
 		byte ar[] = null;
-		while (running) {
+		long left = 0;
+		long right = Integer.MAX_VALUE;
+		long middle = 0;
+		
+		while(left <= right) {
 			try {
-				ar = new byte[res];
-				running = false;
+				middle = (left + right) / 2;
+				ar = new byte[(int)middle];
+				left = middle + 1;
 			}
 			catch (Throwable e){
-				res/=2;
-				// решение с помощью бинарного алгоритма
+				right = middle - 1;
 			}
+			ar = null;
 		}
-		return res;
+		
+		return (int)right;
 	}
 }

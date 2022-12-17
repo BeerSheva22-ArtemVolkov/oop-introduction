@@ -2,11 +2,12 @@ package telran.memory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class MemoryOperationsTest {
 
 	byte ar[];
+	
 	
 	@Test
 	void maxMemoryTest() {
@@ -19,7 +20,8 @@ class MemoryOperationsTest {
 		} catch (Throwable e){
 			flException = true;
 		}
-		//assertTrue(flException);
+		
+		assertTrue(flException);
 	}
 
 }
