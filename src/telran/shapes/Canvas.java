@@ -26,6 +26,9 @@ public class Canvas extends Shape {
 
 		setPresSize();
 		String[] res = new String[setResLength(offset)];
+		
+		setFullDirection();
+		
 		switch (direction){
 			case "row":
 				res = shapes[0].presentation(offset);
@@ -86,4 +89,11 @@ public class Canvas extends Shape {
 		}
 	}
 	
+	private void setFullDirection() {
+		for(int i = 0; i < shapes.length; i++) {
+			if ( shapes[i] instanceof Canvas ) {
+				((Canvas) shapes[i]).setDirection(direction);
+			}
+		}
+	}
 }

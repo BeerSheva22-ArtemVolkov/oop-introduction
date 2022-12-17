@@ -50,7 +50,7 @@ public class ShapeTests {
 		displayStrings(rSquare.presentation(35));
 	}
 	
-	
+	@Disabled
 	@Test
 	void shapesTest1() {
 		
@@ -68,6 +68,7 @@ public class ShapeTests {
 		displayStrings(canva.presentation(5));
 	}
 	
+	@Disabled
 	@Test
 	void shapesTest2() {
 		
@@ -81,6 +82,30 @@ public class ShapeTests {
 		Canvas canva = new Canvas(10, 10, shapes);
 		canva.setDirection("row");
 		displayStrings(canva.presentation(5));
+	}
+	
+	
+	@Test
+	void canvasTest() {
+		SquareLeftTriangle lSquare = new SquareLeftTriangle(6);
+		SquareRightTriangle rSquare = new SquareRightTriangle(5);
+		Square square = new Square(5);
+		Rectangle rect1 = new Rectangle(15,3);
+		Rectangle rect2 = new Rectangle(3,15);
+		
+		Shape[] shapes1 = {rect1, square, rSquare, lSquare};
+		Shape[] shapes2 = {lSquare, rect2, square};
+		
+		Canvas canvas1 = new Canvas(40, 10, shapes1);
+		Canvas canvas2 = new Canvas(10, 10, shapes2);
+		Canvas canvas3 = new Canvas(10, 10, new Shape[] {canvas1, canvas2});
+		
+		canvas1.setMargin(10);
+		canvas1.setDirection("column");
+		canvas2.setMargin(10);
+		canvas2.setDirection("column");
+		canvas3.setDirection("row");
+		displayStrings(canvas3.presentation(5));
 	}
 	
 	private void displayStrings(String strings[]) {
