@@ -20,8 +20,15 @@ class MemoryOperationsTest {
 		} catch (Throwable e){
 			flException = true;
 		}
-		
 		assertTrue(flException);
+	}
+	
+	@Test
+	void standardMemoryMethods() {
+		System.out.println("Used Memory   : " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) + " bytes");
+	    System.out.println("Free Memory   : " + Runtime.getRuntime().freeMemory() + " bytes");
+	    System.out.println("Total Memory  : " + Runtime.getRuntime().totalMemory() + " bytes");
+	    System.out.println("Max Memory    : " + Runtime.getRuntime().maxMemory() + " bytes");
 	}
 
 }
