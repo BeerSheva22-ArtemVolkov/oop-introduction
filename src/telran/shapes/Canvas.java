@@ -23,11 +23,11 @@ public class Canvas extends Shape {
 	
 	@Override
 	public String[] presentation(int offset) {
-
+	
+		setFullDirection();
+		
 		setPresSize();
 		String[] res = new String[setResLength(offset)];
-		
-		setFullDirection();
 		
 		switch (direction){
 			case "row":
@@ -91,7 +91,8 @@ public class Canvas extends Shape {
 	
 	private void setFullDirection() {
 		for(int i = 0; i < shapes.length; i++) {
-			if ( shapes[i] instanceof Canvas ) {
+			if (shapes[i] instanceof Canvas) {
+				//Downcasting
 				((Canvas) shapes[i]).setDirection(direction);
 			}
 		}

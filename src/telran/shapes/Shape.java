@@ -20,6 +20,7 @@ public abstract class Shape {
 		this.width = width;
 		this.height = height;
 	}
+	
 	public int getWidth() {
 		return width;
 	}
