@@ -85,7 +85,7 @@ public class MyArrays {
 				res[index++] = element;
 			}
 		}
-		
+	
 		return res;
 	}
 
@@ -102,22 +102,34 @@ public class MyArrays {
 		return res;
 	}
 
-	//(глянуть интерфейс предикат) Написать метод и тест
 	public static <T> T[] removeIf(T[] array, Predicate<T> predicate) {
-		//TODO
-		//one code line with no additional methods
-		return array;
+		return filter(array, predicate.negate());
 	}
 	
 	public static <T> T[] removeRepeated(T[] array) {
-		//TODO
-		//try to write this method based on removeIf
-		return null;
+		T[] res = Arrays.copyOf(array, array.length);
+		Arrays.fill(res, null);
+		int i = 0;
+
+		while(array.length != 0) {
+			T a0 = array[0];
+			if(!contains(res, a0)) {
+				array = removeIf(array, x -> x.equals(a0));
+				res[i++] = a0;
+			}
+		}
+		
+		return Arrays.copyOf(res, i);
 	}
 	
 	public static <T> boolean contains(T[] array, T pattern) {
-		//TODO
-		//returns true if element equal to pattern exists in array
-		return false;
+		boolean res = false;
+		int i = 0;
+		int len = array.length;
+		while (!res && i < len) {
+			res = array[i] == null ? pattern == null ? true : false : array[i].equals(pattern) ? true : false;
+			i++;
+		}
+		return res;
 	}
 }

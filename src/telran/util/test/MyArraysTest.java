@@ -2,6 +2,7 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -70,7 +71,7 @@ class MyArraysTest {
 		assertEquals(-5, MyArrays.binarySearch(ar, "lmn", comp));
 	}
 	
-	
+	@Disabled
 	@Test
 	void filterTest() {
 		// мы хотим найти четные числа и с помощью метода фильтр найти строки которые содержат "какую то" букву
@@ -95,5 +96,21 @@ class MyArraysTest {
 			res = reminder != 0? Integer.compare(o2, o1) : Integer.compare(o1, o2);
 		}
 		return res;
+	}
+	
+	
+	@Test
+	void removeTest() {
+		Integer nums[] = {100, 10, 18, 10, 20, 18};
+		Integer nums2[] = {100, 10, 18, null, 10, 20, 18};
+		String strs[] = {"a", "ab", "ab", "abc", "a", "abcd", "abc", "abcde"};
+		Integer expectedRepeatedNums[] = {100, 10, 18, 20};
+		Integer expectedIfNums[] = {100, 18, 20, 18};
+		String expectedRepeatedStrs[] = {"a", "ab", "abc", "abcd", "abcde"};
+
+		assertArrayEquals(MyArrays.removeRepeated(nums), expectedRepeatedNums);
+		assertArrayEquals(MyArrays.removeIf(nums, x -> x.equals(10)), expectedIfNums);
+		assertArrayEquals(MyArrays.removeRepeated(strs), expectedRepeatedStrs);
+		assertTrue(MyArrays.contains(nums2, null));
 	}
 }
