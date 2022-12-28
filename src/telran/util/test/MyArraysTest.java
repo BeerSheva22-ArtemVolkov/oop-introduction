@@ -9,10 +9,14 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import telran.util.ArrayList;
 import telran.util.MyArrays;
 
 class MyArraysTest {
 
+	static final int N_NUMBERS = 100000;
+	static final int N_RUNS = 1000;
+	
 	Integer numbers[] = {13, 2, -8, 47, 100, 10, -7, 7};
 	String[] ar = {"ab", "abm", "abmb", "abmbc"};
 //	Comparator<Integer> evenOddComparator = (o1, o2) -> {
@@ -98,7 +102,7 @@ class MyArraysTest {
 		return res;
 	}
 	
-	
+	@Disabled
 	@Test
 	void removeTest() {
 		Integer nums[] = {100, 10, 18, 10, 20, 18};
@@ -108,9 +112,87 @@ class MyArraysTest {
 		Integer expectedIfNums[] = {100, 18, 20, 18};
 		String expectedRepeatedStrs[] = {"a", "ab", "abc", "abcd", "abcde"};
 
-		assertArrayEquals(MyArrays.removeRepeated(nums), expectedRepeatedNums);
+		//assertArrayEquals(MyArrays.removeRepeated(nums), expectedRepeatedNums);
 		assertArrayEquals(MyArrays.removeIf(nums, x -> x.equals(10)), expectedIfNums);
-		assertArrayEquals(MyArrays.removeRepeated(strs), expectedRepeatedStrs);
-		assertTrue(MyArrays.contains(nums2, null));
+		//assertArrayEquals(MyArrays.removeRepeated(strs), expectedRepeatedStrs);
+		//assertTrue(MyArrays.contains(nums2, null));
+	}
+	
+	@Disabled
+	@Test
+	void joinFunctionalTest() {
+		String expected = "13,2,-8,47,100,10,-7,7";
+		assertEquals(expected, MyArrays.joinString(numbers, ","));
+	}
+	
+	@Disabled
+	@Test
+	void joinPerfomanceTest() {
+		Integer[] largeArray = getLargeNumbersArray();
+		for(int i = 0; i < N_RUNS; i++) {
+			MyArrays.joinString(largeArray, ",");
+		}
+	}
+	
+	private Integer[] getLargeNumbersArray() {
+		Integer[] res = new Integer[N_NUMBERS];
+		Arrays.fill(res, 1000);
+		return res;
+	}
+	
+
+	@Test
+	void arrayListTest() {
+	
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		
+		al.add(1);
+		al.add(2);
+		al.add(3);
+		al.add(4);
+		al.add(5);
+		al.add(6);
+		al.add(3);
+		al.add(7);
+		
+		assertEquals(al.size(), 8);
+		assertFalse(al.isEmpty());
+		assertEquals(al.indexOf(3), 2);
+		assertEquals(al.lastIndexOf(3), 6);
+		assertTrue(al.contains(7));
+		assertFalse(al.contains(8));
+		
+		al.add(8, 11);
+		// {1,2,3,4,5,6,3,7,11}
+		assertEquals(al.indexOf(11), 8);
+		assertEquals(al.size(), 9);
+		
+		al.remove(0);
+		// {2,3,4,5,6,3,7,11}
+		assertEquals(al.indexOf(1), -1);
+		assertEquals(al.size(), 8);
+		
+		assertEquals((Integer) 2, al.get(0));
+		assertEquals((Integer) 6, al.get(4));
+		assertEquals((Integer) 11, al.get(7));
+		
+		al.removeIf(x->{
+			return (x != null && x.equals(3));
+		});
+		// {2,4,5,6,7,11}
+		assertEquals(al.size(), 6);
+		assertEquals((Integer) 4, al.get(1));
+		assertEquals((Integer) 11, al.get(5));
+		
+		al.remove((Integer)5);
+		// {2,4,6,7,11}
+		assertEquals(al.size(), 5);
+		assertEquals((Integer) 6, al.get(2));
+		
+		al.set(2, (Integer) 1000);
+		// {2,4,1000,7,11}
+		assertEquals((Integer) 1000, al.get(2));
+		
+		assertArrayEquals(al.toArray(new Integer[0]), new Integer[] {2, 4, 1000, 7, 11});
 	}
 }
