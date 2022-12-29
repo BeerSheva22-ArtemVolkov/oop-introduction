@@ -155,6 +155,8 @@ class MyArraysTest {
 		al.add(3);
 		al.add(7);
 		
+		Arrays.toString(al.toArray(numbers));
+		
 		assertEquals(al.size(), 8);
 		assertFalse(al.isEmpty());
 		assertEquals(al.indexOf(3), 2);
@@ -193,6 +195,12 @@ class MyArraysTest {
 		// {2,4,1000,7,11}
 		assertEquals((Integer) 1000, al.get(2));
 		
-		assertArrayEquals(al.toArray(new Integer[0]), new Integer[] {2, 4, 1000, 7, 11});
+		al.add(3, 777);
+		// {2,4,1000,777,7,11}
+		assertEquals((Integer) 777, al.get(3));
+		
+		assertArrayEquals(al.toArray(new Integer[6]), new Integer[] {2, 4, 1000, 777, 7, 11});
+		assertArrayEquals(al.toArray(new Integer[7]), new Integer[] {2, 4, 1000, 777, 7, 11, null});
+		assertArrayEquals(al.toArray(new Integer[2]), new Integer[] {2, 4, 1000, 777, 7, 11});
 	}
 }

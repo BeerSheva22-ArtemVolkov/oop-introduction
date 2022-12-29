@@ -47,6 +47,17 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
+		int oldSize = size;
+		for (int i = size - 1; i >=0; i--) {
+			if(predicate.test(array[i])){
+				remove(i);
+			}
+		}
+		return oldSize > size;
+	}
+	
+	
+	public boolean myRemoveIf(Predicate<T> predicate) {
 		T[] newArr = MyArrays.removeIf(Arrays.copyOf(array, size), predicate);
 		int len = newArr.length;
 		System.arraycopy(newArr, 0, array, 0, len);
@@ -84,6 +95,10 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public void add(int index, T element) {
+		if(size == array.length) {
+			reallocate();
+		}
+		System.arraycopy(array, index - 1, array, index, size - 1);
 		array[index] = element;
 		size++;
 	}
@@ -93,8 +108,10 @@ public class ArrayList<T> implements List<T> {
 		if (index < 0 || index >= size()){
 			throw new IndexOutOfBoundsException();
 		}
+		
 		System.arraycopy(array, index + 1, array, index, size - index);
 		size--;
+		//array[size] = null;
 		return get(index);
 	}
 
