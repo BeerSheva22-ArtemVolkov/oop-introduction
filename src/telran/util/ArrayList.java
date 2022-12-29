@@ -74,7 +74,12 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T[] toArray(T[] ar) {
-		return Arrays.copyOf(array, size);
+		if (size > ar.length) {
+			ar = Arrays.copyOf(ar, size);
+		}
+		System.arraycopy(array, 0, ar, 0, size);
+		Arrays.fill(ar, size, ar.length, null);
+		return ar;
 	}
 
 	@Override
