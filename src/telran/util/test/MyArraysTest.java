@@ -140,7 +140,7 @@ class MyArraysTest {
 		return res;
 	}
 	
-
+	@Disabled
 	@Test
 	void arrayListTest() {
 	

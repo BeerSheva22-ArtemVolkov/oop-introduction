@@ -1,15 +1,34 @@
 package telran.util;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class ArrayList<T> implements List<T> {
-
-	// нигде нельзя строить новый массив (не использовать New), кроме add
 	
 	private static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
 	private int size;
+	
+	private class ArrayListIterator implements Iterator<T> {
+		
+		int current = 0;
+		
+		@Override
+		public boolean hasNext() {
+			return current < size;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return array[current++];
+		}
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList(int capacity) {
@@ -47,8 +66,9 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
+		//FIXME - write implementation of O[N] (работа с индексами)
 		int oldSize = size;
-		for (int i = size - 1; i >=0; i--) {
+		for (int i = size - 1; i >= 0; i--) {
 			if(predicate.test(array[i])){
 				remove(i);
 			}
@@ -56,7 +76,31 @@ public class ArrayList<T> implements List<T> {
 		return oldSize > size;
 	}
 	
-	
+	public boolean removeIfOn(Predicate<T> predicate) {
+		int oldSize = size;
+		int left = 0;
+		int right = size - 1;
+		while (left != right) {
+			if(predicate.test(array[left])){
+				if(predicate.test(array[right])){
+					right--;
+				}
+				else {
+					T bubble = get(right);
+					set(right, get(left));
+					set(left, bubble);
+					left++;
+				}
+			}
+		}
+		for (int i = size - 1; i >= left; i--) {
+			remove(i);
+		}
+		
+		return oldSize > size;
+	}
+
+	//Работает
 	public boolean myRemoveIf(Predicate<T> predicate) {
 		T[] newArr = MyArrays.removeIf(Arrays.copyOf(array, size), predicate);
 		int len = newArr.length;
@@ -70,7 +114,7 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean isEmpty() {
-		return array.length == 0;
+		return size == 0;
 	}
 
 	@Override
@@ -80,7 +124,7 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean contains(T pattern) {
-		return MyArrays.contains(array, pattern);
+		return indexOf(pattern) > -1;
 	}
 
 	@Override
@@ -95,6 +139,19 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public void add(int index, T element) {
+		checkIndex(index, true);
+		if (size == array.length) {
+			reallocate();
+		}
+		System.arraycopy(array, index, array, index + 1, size - index);
+		array[index] = element;
+		size++;
+
+	}
+	
+	//Работает
+	public void myAdd(int index, T element) {
+		checkIndex(index, true);
 		if(size == array.length) {
 			reallocate();
 		}
@@ -105,18 +162,29 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T remove(int index) {
-		if (index < 0 || index >= size()){
-			throw new IndexOutOfBoundsException();
-		}
-		
-		System.arraycopy(array, index + 1, array, index, size - index);
+		checkIndex(index, false);
+		T res = array[index];
 		size--;
-		//array[size] = null;
-		return get(index);
+		System.arraycopy(array, index + 1, array, index, size - index);
+		array[size] = null;
+		return res;
 	}
 
 	@Override
 	public int indexOf(T pattern) {
+		int index = 0;
+		while(index < size && !isEqual(array[index], pattern)) {
+			index++;
+		}
+		return index < size ? index : -1;
+	}
+	
+	private boolean isEqual(T element, T pattern) {
+		return element == null  ? element == pattern : element.equals(pattern);
+	}
+	
+	//Работает
+	public int myIndexOf(T pattern) {
 		int res = -1;
 		int i = 0;
 		while (res == -1 && i < size) {
@@ -132,6 +200,15 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int lastIndexOf(T pattern) {
+		int index = size - 1;
+		while(index >= 0 && !isEqual(array[index], pattern)) {
+			index--;
+		}
+		return index;
+	}
+
+	// Работает
+	public int myLastIndexOf(T pattern) {
 		int res = -1;
 		for(int i = 0; i < size; i++) {
 			if (get(i) == pattern) {
@@ -143,18 +220,27 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T get(int index){
-		if (index < 0 || index >= size()){
-			throw new IndexOutOfBoundsException();
-		}
+		checkIndex(index, false);
 		return array[index];
 	}
 
 	@Override
 	public void set(int index, T element) {
-		if (index < 0 || index >= size()){
-			throw new IndexOutOfBoundsException();
-		}
+		checkIndex(index, false);
 		array[index] = element;
 	}
 
+	private void checkIndex(int index, boolean sizeIncluded) {
+		int sizeDelta = sizeIncluded ? 0 : 1;
+		if (index < 0 || index > size - sizeDelta) {
+			throw new IndexOutOfBoundsException(index);
+		}
+		
+	}
+	
+	@Override
+	public Iterator<T> iterator() {
+		return new ArrayListIterator();
+	}
+	
 }

@@ -14,5 +14,4 @@ public interface List<T> extends Collection<T>{
 
 	void set(int index, T element);
 	
-	
 }
