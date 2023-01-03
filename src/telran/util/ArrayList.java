@@ -66,37 +66,17 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		//FIXME - write implementation of O[N] (работа с индексами)
 		int oldSize = size;
-		for (int i = size - 1; i >= 0; i--) {
+		int tIndex = 0;
+		for (int i = 0; i < oldSize; i++) {
 			if(predicate.test(array[i])){
-				remove(i);
+				size--;
+			}
+			else {
+				array[tIndex++] = array[i];
 			}
 		}
-		return oldSize > size;
-	}
-	
-	public boolean removeIfOn(Predicate<T> predicate) {
-		int oldSize = size;
-		int left = 0;
-		int right = size - 1;
-		while (left != right) {
-			if(predicate.test(array[left])){
-				if(predicate.test(array[right])){
-					right--;
-				}
-				else {
-					T bubble = get(right);
-					set(right, get(left));
-					set(left, bubble);
-					left++;
-				}
-			}
-		}
-		for (int i = size - 1; i >= left; i--) {
-			remove(i);
-		}
-		
+		Arrays.fill(array, size, oldSize, null);
 		return oldSize > size;
 	}
 
@@ -120,11 +100,6 @@ public class ArrayList<T> implements List<T> {
 	@Override
 	public int size() {
 		return size;
-	}
-
-	@Override
-	public boolean contains(T pattern) {
-		return indexOf(pattern) > -1;
 	}
 
 	@Override
@@ -228,14 +203,6 @@ public class ArrayList<T> implements List<T> {
 	public void set(int index, T element) {
 		checkIndex(index, false);
 		array[index] = element;
-	}
-
-	private void checkIndex(int index, boolean sizeIncluded) {
-		int sizeDelta = sizeIncluded ? 0 : 1;
-		if (index < 0 || index > size - sizeDelta) {
-			throw new IndexOutOfBoundsException(index);
-		}
-		
 	}
 	
 	@Override
