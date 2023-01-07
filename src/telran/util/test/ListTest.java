@@ -91,18 +91,6 @@ public abstract class ListTest extends CollectionTest {
 	@Test
 	@Override
 	void testIterator() {
-//		Iterator<Integer> iter = list.iterator();
-//		int i = 0;
-//		Integer [] expected = {10, 100, -5, 134, 280, 120, 15};
-//		
-//      while(iter.hasNext()){
-//        	assertEquals(iter.next(), expected[i++]);
-//      }
-//		
-//      i = 0;
-//      for (Integer elem : list) {
-//        	assertEquals(elem, expected[i++]);
-//     	}
 		Integer actual[] = new Integer[numbers.length];
 		int index = 0;
 		Iterator<Integer> it = list.iterator();

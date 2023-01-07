@@ -1,8 +1,10 @@
 package telran.util.test;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 import telran.util.*;
+
+import static org.junit.Assert.*;
 
 class LinkedListTest extends ListTest{
 
@@ -13,4 +15,10 @@ class LinkedListTest extends ListTest{
 		super.setUp();
 	}
 
+	@Test
+	void isLoopTest() {
+		assertFalse(((LinkedList<Integer>)collection).isLoop());
+		((LinkedList<Integer>)collection).setNext(5, 1);
+		assertTrue(((LinkedList<Integer>)collection).isLoop());
+	}
 }
