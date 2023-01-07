@@ -1,5 +1,6 @@
 package telran.util.test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -100,4 +101,19 @@ public abstract class ListTest extends CollectionTest {
 		assertArrayEquals(numbers, actual); 
 		assertThrowsExactly(NoSuchElementException.class, () -> it.next()); //  () -> it.next() функциональный интерфейс, который ничего не принимает и не возвращает
 	}
+	
+	@Test
+	@Override
+	void removeIteratorTest() {
+	      ArrayList<String> strings = new ArrayList<>();
+	      strings.add("aaa");
+	      strings.add("bbb");
+	      Iterator<String> it = strings.iterator();
+	      it.next(); 
+	      it.remove(); 
+	      it.next(); 
+	      it.remove();
+	      assertTrue(strings.isEmpty());
+	      super.removeIteratorTest();
+	  }
 }
