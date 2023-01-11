@@ -43,9 +43,8 @@ public interface Collection<T> extends Iterable<T>{
 		if (size > ar.length) {
 			ar = Arrays.copyOf(ar, size);
 		}
-		Iterator<T> it = iterator();
-		while(it.hasNext()) {
-			ar[i++] = it.next();
+		for(T obj: this) {
+			ar[i++] = obj;
 		}
 		Arrays.fill(ar, size, ar.length, null);
 		return ar;

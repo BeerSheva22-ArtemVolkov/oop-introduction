@@ -1,0 +1,38 @@
+package telran.util.test;
+
+import static org.junit.Assert.*;
+
+import java.util.Iterator;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import telran.util.*;
+
+public class SetTest extends CollectionTest {
+
+	Set<Integer> set;
+	
+	@BeforeEach
+	void setUp() throws Exception {
+		collection = new HashSet<>();
+		super.setUp();
+		set = (Set<Integer>) collection;		
+	}
+	
+	@Override
+	@Test
+	void testAdd() {
+		assertTrue(set.add(Integer.MAX_VALUE));
+		assertFalse(set.add(Integer.MAX_VALUE));
+	}
+
+	@Override
+	@Test
+	void testIterator() {
+		Iterator<Integer> it = set.iterator();
+		assertTrue(it.hasNext());
+
+	}
+
+}

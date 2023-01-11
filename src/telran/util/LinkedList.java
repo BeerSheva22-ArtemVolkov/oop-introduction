@@ -183,8 +183,8 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 
 		boolean hasEnd = false;
 		Node<T> startNode = head;
-		Node<T> checkedNode = head.next;
-		while (!hasEnd && startNode != checkedNode) {
+		Node<T> checkedNode = head;
+		do {
 			if (startNode.next == null || checkedNode.next == null || checkedNode.next.next == null) {
 				hasEnd = true;
 			}
@@ -192,7 +192,7 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 				startNode = startNode.next;
 				checkedNode = checkedNode.next.next;
 			}
-		}
+		} while (!hasEnd && startNode != checkedNode);
 		return !hasEnd;
 	}
 	private Node<T> getNode(int index) {
