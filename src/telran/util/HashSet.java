@@ -174,23 +174,23 @@ public class HashSet<T> extends AbstractCollection<T> implements Set<T> {
 	public Iterator<T> iterator() {
 		return new HashSetIterator();
 	}
-
-	//FIXME The following method is only for initial test
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		int index = 0;
-		for (List<T> list : hashTable) {
-			if(list != null) {
-				for(T obj : list) {
-					ar[index++] = obj;
-				}
-			}
-		}
-		Arrays.fill(ar, size, ar.length, null);
-		return ar;
-	}
+//
+//	//FIXME The following method is only for initial test
+//	@Override
+//	public T[] toArray(T[] ar) {
+//		if (ar.length < size) {
+//			ar = Arrays.copyOf(ar, size);
+//		}
+//		int index = 0;
+//		for (List<T> list : hashTable) {
+//			if(list != null) {
+//				for(T obj : list) {
+//					ar[index++] = obj;
+//				}
+//			}
+//		}
+//		Arrays.fill(ar, size, ar.length, null);
+//		return ar;
+//	}
 	
 }
